@@ -1,0 +1,15 @@
+.DS_Store
+Thumbs.db
+
+node_modules/
+app-dist/
+
+.env
+.env.*
+!.env.sample
+!.env.*.sample
+!.env.*.local.sample
+
+*.log
+-log*
+.idea

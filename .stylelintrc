@@ -1,0 +1,11 @@
+{
+    "extends": [
+        "stylelint-config-recommended",
+        "stylelint-config-prettier",
+        "stylelint-config-hudochenkov",
+        "stylelint-config-hudochenkov/order"
+    ],
+    "rules": {
+        "selector-max-type": null
+    }
+}

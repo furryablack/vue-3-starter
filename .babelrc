@@ -1,0 +1,11 @@
+{
+    "presets": [
+        "@vue/cli-plugin-babel/preset"
+    ],
+    "plugins": [
+        ["effector/babel-plugin", {"addLoc": true}],
+        ["replace-import-path", {
+            "src": "effector", "dest": "effector-root"
+        }]
+    ]
+}

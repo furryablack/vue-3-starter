@@ -1,0 +1,55 @@
+@import (reference) "./generic.h";
+
+html {
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+body {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	overflow: @body-overflow;
+	width: 100%;
+	min-width: @body-min-width;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	background-color: @body-background-color;
+	color: @body-color;
+	font-weight: @body-font-weight;
+	font-size: @body-font-size;
+	font-family: @body-font-family;
+	line-height: @body-line-height;
+	letter-spacing: @body-letter-spacing;
+	text-rendering: @body-text-rendering;
+	text-size-adjust: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: @h-font-weight;
+	font-size: @h-font-size;
+}
+
+ul {
+	list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+	margin: 0;
+}
