@@ -1,7 +1,6 @@
 {
     "*.less": [
-        "prettier --write",
-        "stylelint --fix --config ./.stylelintrc",
+        yarn lint:style:fix,
         "git add"
     ],
     "*.{ts,js}": [
