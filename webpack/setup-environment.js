@@ -2,9 +2,7 @@ const {existsSync} = require("fs");
 const {config: dotEnvConfig} = require("dotenv");
 const dotEnvExpand = require("dotenv-expand");
 
-const {
-    IS_DEVELOPMENT, IS_PRODUCTION, IS_TEST,
-} = require("./environment");
+const {IS_DEVELOPMENT, IS_PRODUCTION, IS_TEST} = require("./environment");
 const PATHS = require("./paths");
 
 const ENV_FILES = [
@@ -15,7 +13,7 @@ const ENV_FILES = [
     PATHS.APP_ENV,
 ].filter(Boolean);
 
-ENV_FILES.forEach(envFile => {
+ENV_FILES.forEach((envFile) => {
     const localEnvFile = `${envFile}.local`;
     if (existsSync(localEnvFile)) {
         dotEnvExpand(dotEnvConfig({path: localEnvFile}));

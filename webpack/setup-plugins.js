@@ -14,79 +14,87 @@ const PATHS = require("./paths");
 const ENVIRONMENT_RAW = getRawEnvironment();
 const {
     NODE_ENV,
-    IS_PRODUCTION, IS_DEVELOPMENT,
-    NEED_MINIMIZE, NEED_ANALYZE,
-    PUBLIC_PATH, PACKAGE_NAME, PACKAGE_VERSION,
+    IS_PRODUCTION,
+    IS_DEVELOPMENT,
+    NEED_MINIMIZE,
+    NEED_ANALYZE,
+    PUBLIC_PATH,
+    PACKAGE_NAME,
+    PACKAGE_VERSION,
 } = ENVIRONMENT_RAW;
 
-exports.setupPlugins = () => ([
-    !IS_DEVELOPMENT && new CleanPlugin(),
+exports.setupPlugins = () =>
+    [
+        !IS_DEVELOPMENT && new CleanPlugin(),
 
-    new DefinePlugin(stringifyEnvironment(ENVIRONMENT_RAW)),
-    new DefinePlugin(
-        {
+        new DefinePlugin(stringifyEnvironment(ENVIRONMENT_RAW)),
+        new DefinePlugin({
             __VUE_OPTIONS_API__: "true",
             __VUE_PROD_DEVTOOLS__: "false",
-        },
-    ),
+        }),
 
-    IS_PRODUCTION && NEED_ANALYZE && new BundleAnalyzerPlugin({
-        analyzerMode: "file",
-        defaultSizes: "parsed",
-        openAnalyzer: false,
-        generateStatsFile: true,
-        statsFilename: PATHS.APP_ANALYZER_STATS,
-        logLevel: "info",
-    }),
+        IS_PRODUCTION &&
+            NEED_ANALYZE &&
+            new BundleAnalyzerPlugin({
+                analyzerMode: "file",
+                defaultSizes: "parsed",
+                openAnalyzer: false,
+                generateStatsFile: true,
+                statsFilename: PATHS.APP_ANALYZER_STATS,
+                logLevel: "info",
+            }),
 
-    new HtmlPlugin({
-        template: PATHS.APP_HTML,
-        templateParameters: {
-            PUBLIC_PATH,
-            PACKAGE_NAME,
-        },
-        minify: (NEED_MINIMIZE ? {
-            removeComments: true,
-            collapseWhitespace: true,
-        } : false),
-    }),
+        new HtmlPlugin({
+            template: PATHS.APP_HTML,
+            templateParameters: {
+                PUBLIC_PATH,
+                PACKAGE_NAME,
+            },
+            minify: NEED_MINIMIZE
+                ? {
+                      removeComments: true,
+                      collapseWhitespace: true,
+                  }
+                : false,
+        }),
 
-    new VueLoaderPlugin(),
+        new VueLoaderPlugin(),
 
-    new CopyPlugin({
-        patterns: [
-            {
-                from: PATHS.APP_STATIC,
-                to: PATHS.APP_DIST_STATIC,
-                toType: "dir",
-                globOptions: {
-                    ignore: ["**/index.html"],
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: PATHS.APP_STATIC,
+                    to: PATHS.APP_DIST_STATIC,
+                    toType: "dir",
+                    globOptions: {
+                        ignore: ["**/index.html"],
+                    },
+                },
+            ],
+        }),
+
+        IS_PRODUCTION &&
+            new ExtractCssChunks({
+                filename: PATHS.OUTPUT.CSS,
+                chunkFilename: PATHS.OUTPUT.CSS_CHUNK,
+            }),
+
+        new ForkTsCheckerWebpackPlugin({
+            typescript: {
+                extensions: {
+                    vue: {
+                        enabled: true,
+                        compiler: "@vue/compiler-sfc",
+                    },
+                },
+                diagnosticOptions: {
+                    semantic: true,
+                    syntactic: false,
                 },
             },
-        ],
-    }),
+        }),
 
-    IS_PRODUCTION && new ExtractCssChunks({
-        filename: PATHS.OUTPUT.CSS,
-        chunkFilename: PATHS.OUTPUT.CSS_CHUNK,
-    }),
+        IS_DEVELOPMENT && new HotModuleReplacementPlugin(),
 
-    new ForkTsCheckerWebpackPlugin({
-        typescript: {
-            extensions: {
-                vue: {
-                    enabled: true,
-                    compiler: "@vue/compiler-sfc",
-                },
-            },
-            diagnosticOptions: {
-                semantic: true,
-                syntactic: false,
-            },
-        },
-    }),
-
-    IS_DEVELOPMENT && new HotModuleReplacementPlugin(),
-
-    new WebpackBar({name: `[${NODE_ENV}] ${PACKAGE_NAME} ${PACKAGE_VERSION}`}),
-].filter(Boolean));
+        new WebpackBar({name: `[${NODE_ENV}] ${PACKAGE_NAME} ${PACKAGE_VERSION}`}),
+    ].filter(Boolean);

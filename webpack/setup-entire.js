@@ -4,11 +4,17 @@ const {getRawEnvironment} = require("./environment");
 const PATHS = require("./paths");
 
 const {
-    NODE_ENV, PACKAGE_NAME,
-    IS_DEVELOPMENT, IS_PRODUCTION,
-    NEED_ANALYZE, NEED_SOURCE_MAPS, NEED_MINIMIZE,
+    NODE_ENV,
+    PACKAGE_NAME,
+    IS_DEVELOPMENT,
+    IS_PRODUCTION,
+    NEED_ANALYZE,
+    NEED_SOURCE_MAPS,
+    NEED_MINIMIZE,
     PUBLIC_PATH,
-    WDS_HOST, WDS_PORT, WDS_HTTPS,
+    WDS_HOST,
+    WDS_PORT,
+    WDS_HTTPS,
 } = getRawEnvironment();
 
 exports.setupEntire = () => ({
@@ -17,7 +23,9 @@ exports.setupEntire = () => ({
     mode: NODE_ENV,
     bail: IS_PRODUCTION,
     context: PATHS.PROJECT_ROOT,
-    devtool: NEED_SOURCE_MAPS && (IS_PRODUCTION && "source-map") || (IS_DEVELOPMENT && "eval-source-map"),
+    devtool:
+        (NEED_SOURCE_MAPS && IS_PRODUCTION && "source-map") ||
+        (IS_DEVELOPMENT && "eval-source-map"),
     profile: IS_PRODUCTION && NEED_ANALYZE,
     stats: "errors-only",
     resolve: {
@@ -74,20 +82,22 @@ exports.setupEntire = () => ({
             },
         },
     },
-    ...(IS_DEVELOPMENT ? {
-        devServer: {
-            hot: true,
-            contentBase: PATHS.APP_DIST,
-            publicPath: PUBLIC_PATH,
-            open: false,
-            compress: true,
-            clientLogLevel: "error",
-            historyApiFallback: {
-                disableDotRule: true,
-            },
-            host: WDS_HOST,
-            port: WDS_PORT,
-            https: WDS_HTTPS,
-        },
-    } : {}),
+    ...(IS_DEVELOPMENT
+        ? {
+              devServer: {
+                  hot: true,
+                  contentBase: PATHS.APP_DIST,
+                  publicPath: PUBLIC_PATH,
+                  open: false,
+                  compress: true,
+                  clientLogLevel: "error",
+                  historyApiFallback: {
+                      disableDotRule: true,
+                  },
+                  host: WDS_HOST,
+                  port: WDS_PORT,
+                  https: WDS_HTTPS,
+              },
+          }
+        : {}),
 });

@@ -1,14 +1,11 @@
 {
-    "linters": {
-        "*.less": [
-            "prettier --write",
-            "stylelint --fix --config ./.stylelintrc",
-            "git add"
-        ],
-        "*.ts": [
-            "prettier --write",
-            "eslint --fix --config ./.eslintrc.js",
-            "git add"
-        ]
-    }
+    "*.less": [
+        "prettier --write",
+        "stylelint --fix --config ./.stylelintrc",
+        "git add"
+    ],
+    "*.{ts,js}": [
+        "yarn lint:code:fix",
+        "git add"
+    ]
 }

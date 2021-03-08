@@ -16,9 +16,9 @@
         "serve": "NODE_ENV=development webpack serve --config webpack/entry",
         "analyze": "node scripts/analyze",
         "lint:styles": "stylelint **/*.less",
-        "lint:code": "eslint **/*.ts",
+        "lint:code": "eslint **/*.{ts,js}",
         "lint:styles:fix": "prettier --write **/*.less && stylelint **/*.less --fix",
-        "lint:code:fix": "prettier --write **/*.ts && eslint **/*.ts --fix"
+        "lint:code:fix": "prettier --write **/*.ts && eslint **/*.{ts,js} --fix"
     },
     "dependencies": {
         "@sentry/tracing": "^6.1.0",
