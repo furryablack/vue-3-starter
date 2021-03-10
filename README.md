@@ -19,7 +19,7 @@ Stack:
 - less
 - babel alongside typescript
 - stylelint with prettier (only styles)
-- eslint with prettier (only ts)
+- eslint with prettier (js and ts)
 
 ---
 
