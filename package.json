@@ -18,7 +18,7 @@
         "lint:styles": "stylelint **/*.less",
         "lint:code": "eslint **/*.{ts,js}",
         "lint:styles:fix": "prettier --write **/*.less && stylelint **/*.less --fix",
-        "lint:code:fix": "prettier --write **/*.ts && eslint **/*.{ts,js} --fix"
+        "lint:code:fix": "prettier --write **/*.{ts,js} && eslint **/*.{ts,js} --fix"
     },
     "dependencies": {
         "@sentry/tracing": "^6.1.0",
