@@ -15,7 +15,6 @@ Stack:
 - effector-root
 - effector-logger
 - effector-inspector
-- sentry
 - less
 - babel alongside typescript
 - stylelint with prettier (only styles)
